@@ -10,7 +10,8 @@ This project is a software application with a graphical user interface that solv
 
 About the N-Queens Problem
 
-The N-Queens problem is a classic computer science challenge where the goal is to place N queens on an N×N chessboard so that no two queens threaten each other. Queens cannot share the same row, column, or diagonal.
+The N-Queens problem is a classic computer science challenge where the goal is to place N queens on an N×N chessboard so that no two queens
+ threaten each other. Queens cannot share the same row, column, or diagonal.
 
 
 
