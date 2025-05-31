@@ -4,7 +4,7 @@ from algorithms.backtracking import solve_n_queens_backtracking
 from algorithms.genetic import genetic_algorithm
 from algorithms.csp import solve_n_queens_csp
 
-MAX_CANVAS_SIZE = 600  # حداکثر اندازه صفحه شطرنجی
+MAX_CANVAS_SIZE = 600
 
 class NQueensGUI:
     def __init__(self, root):
@@ -30,22 +30,21 @@ class NQueensGUI:
         self.next_button = tk.Button(root, text="Next", command=self.show_next, state="disabled")
         self.next_button.grid(row=4, column=1, pady=5)
 
-        # کانواس را با اندازه اولیه بساز (بعداً تنظیم می‌شود)
         self.canvas = tk.Canvas(root, width=MAX_CANVAS_SIZE, height=MAX_CANVAS_SIZE)
         self.canvas.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
 
         self.solutions = []
         self.current_index = 0
         self.n = 8
-        self.cell_size = 60  # مقدار پیش فرض، بعدا تنظیم می‌شود
+        self.cell_size = 60
 
     def on_algo_change(self, event):
         self.prev_button.config(state="disabled")
         self.next_button.config(state="disabled")
 
     def update_cell_size(self, n):
-        # اندازه هر خانه را بر اساس n محاسبه کن تا کل صفحه بیشتر از MAX_CANVAS_SIZE نشود
-        self.cell_size = max(10, min(MAX_CANVAS_SIZE // n, 60))  # حداقل ۱۰، حداکثر ۶۰
+
+        self.cell_size = max(10, min(MAX_CANVAS_SIZE // n, 60))
 
     def draw_board(self, n):
         self.canvas.delete("all")

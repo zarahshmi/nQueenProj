@@ -1,63 +1,57 @@
 import random
 
-def fitness(individual):
-    n = len(individual)
-    conflicts = 0
+def random_chromosome(size):
+    # Generate a random permutation of queens in each column (one per row)
+    return random.sample(range(size), size)
+
+def fitness(chromosome):
+    n = len(chromosome)
+    attacks = 0
     for i in range(n):
         for j in range(i + 1, n):
-            if individual[i] == individual[j] or abs(individual[i] - individual[j]) == abs(i - j):
-                conflicts += 1
-    max_conflicts = n * (n - 1) // 2
-    return max_conflicts - conflicts
-
-def generate_individual(n):
-    # ساخت فردی که درصدی از ژن‌ها بدون تکرارند
-    individual = []
-    used = set()
-    for _ in range(n):
-        val = random.randint(0, n - 1)
-        # سعی کن تکراری نباشه، ولی اگر شد، بپذیر
-        if val not in used:
-            used.add(val)
-        individual.append(val)
-    return individual
+            # Check for diagonal attacks
+            if abs(chromosome[i] - chromosome[j]) == abs(i - j):
+                attacks += 1
+    return -attacks  # Lower is better
 
 def crossover(parent1, parent2):
     n = len(parent1)
-    point1 = random.randint(1, n // 2)
-    point2 = random.randint(point1 + 1, n - 1)
-    child = parent1[:point1] + parent2[point1:point2] + parent1[point2:]
+    point = random.randint(1, n - 2)
+    child = parent1[:point]
+    for gene in parent2:
+        if gene not in child:
+            child.append(gene)
     return child
 
-def mutate(individual, mutation_rate=0.1):
-    n = len(individual)
-    for i in range(n):
-        if random.random() < mutation_rate:
-            # به جای مقدار تصادفی، جابجایی دو ژن را امتحان کن
-            j = random.randint(0, n - 1)
-            individual[i], individual[j] = individual[j], individual[i]
+def mutate(chromosome):
+    # Swap two genes (rows of two queens)
+    i, j = random.sample(range(len(chromosome)), 2)
+    chromosome[i], chromosome[j] = chromosome[j], chromosome[i]
 
-def genetic_algorithm(n, population_size=100, generations=1000, mutation_rate=0.1):
-    population = [generate_individual(n) for _ in range(population_size)]
+def genetic_algorithm(n, population_size=300, generations=1000):
+    population = [random_chromosome(n) for _ in range(population_size)]
 
     for gen in range(generations):
-        population.sort(key=lambda ind: -fitness(ind))
-        best = population[0]
+        population.sort(key=fitness, reverse=True)
 
-        if fitness(best) == (n * (n - 1)) // 2:
-            print(f"✅ جواب پیدا شد در نسل {gen}")
+        # Print the best chromosome of this generation
+        best = population[0]
+        print(f"Generation {gen} → Best: {best}, Fitness: {fitness(best)}")
+
+        if fitness(best) == 0:
+            print(f"✅ Solved in generation {gen}")
             return best
 
-        top_k = population[:max(2, population_size // 10)]
-        new_population = top_k[:]  # حفظ بهترین‌ها
+        new_population = population[:10]  # Elitism
 
         while len(new_population) < population_size:
-            parent1, parent2 = random.sample(top_k, 2)
+            parent1, parent2 = random.choices(population[:50], k=2)
             child = crossover(parent1, parent2)
-            mutate(child, mutation_rate)
+            if random.random() < 0.2:
+                mutate(child)
             new_population.append(child)
 
         population = new_population
 
-    print("❌ جوابی پیدا نشد.")
-    return None
+    print("❌ No perfect solution found.")
+    return population[0]  # Best possible solution found
