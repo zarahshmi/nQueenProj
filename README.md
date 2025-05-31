@@ -1,4 +1,4 @@
-~~~~N-Queens Solver with Graphical User Interface
+N-Queens Solver with Graphical User Interface
 This project is a software application with a graphical user interface that solves the classic N-Queens problem using three different algorithms:
 
 * Backtracking
@@ -6,16 +6,15 @@ This project is a software application with a graphical user interface that solv
 * Genetic Algorithm
 
 * Constraint Satisfaction Problem (CSP)
+* 
+
+_**About the N-Queens Problem**_
+
+The N-Queens problem is a classic computer science challenge where the goal is to place N queens on an N×N chessboard so that no two queens threaten each other. Queens cannot share the same row, column, or diagonal.
 
 
-About the N-Queens Problem
 
-The N-Queens problem is a classic computer science challenge where the goal is to place N queens on an N×N chessboard so that no two queens
- threaten each other. Queens cannot share the same row, column, or diagonal.
-
-
-
-Project Features
+**Project Features**
 
 * Simple and user-friendly GUI built with the Tkinter library
 
@@ -30,8 +29,7 @@ Project Features
 * Shows the genetic algorithm’s progress and status as text output in the console
 
 
-
-Implemented Algorithms
+**Implemented Algorithms**
 
 1. Backtracking Algorithm
 
@@ -46,13 +44,15 @@ An evolutionary optimization algorithm that uses a population of chromosomes, mu
 A problem-solving method that considers constraints and checks consistency (backtracking with pruning) to find solutions faster.
 
 
+**Project Structure**
 
-Project Structure
+n_queens_solver/
 
-n_queen/
 ├── gui/
-│   └── main_gui.py            
+
+│   └── main_gui.py
 ├── algorithms/
+
 │   ├── backtracking.py       
 │   ├── genetic.py           
 │   └── csp.py              
@@ -62,7 +62,8 @@ n_queen/
 
 
 
-Important Notes
+
+**Important Notes**
 
 * The minimum allowed board size (N) is 4; smaller values will show a warning message.
 
@@ -72,4 +73,4 @@ Important Notes
 
 * Genetic Algorithm might take longer for larger N but is generally faster than Backtracking.
 
-* If no perfect solution is found, the best possible solution will be displayed.~~~~
+* If no perfect solution is found, the best possible solution will be displayed.
